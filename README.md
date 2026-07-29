@@ -144,3 +144,8 @@ Database operations are wrapped in try/except blocks (`SQLAlchemyError`) and ret
 ## Postman collection
 
 A Postman collection covering `/ask` and `/documents` endpoints is included in the repository root, using a `base_url` environment variable (`http://localhost:8000`).
+
+---
+## Author
+
+**Anosha** — AI Engineer Intern, Venturenox (Venture Works LLP)
