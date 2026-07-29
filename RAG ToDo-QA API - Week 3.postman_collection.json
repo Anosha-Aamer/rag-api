@@ -1,0 +1,44 @@
+{
+  "info": {
+    "_postman_id": "ca4ddb17-4a4d-4653-b9fa-b9d7541384de",
+    "name": "RAG ToDo/QA API - Week 3",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56605081"
+  },
+  "item": [
+    {
+      "name": "QA",
+      "item": [
+        {
+          "name": "ask",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Documents",
+      "item": [
+        {
+          "name": "all_doc",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "single_id_doc",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
