@@ -9,6 +9,7 @@ load_dotenv()
 
 from app.database import SessionLocal
 from app.models import Document, Chunk
+from sentence_transformers import SentenceTransformer
 
 CORPUS_DIR = "data/pdf/arxiv/corpus"
 
@@ -16,6 +17,7 @@ with open("data/subset_doc_ids.json", "r", encoding="utf-8") as f:
     subset_doc_ids = json.load(f)
 
 db = SessionLocal()
+embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
 
 loaded_count = 0
 failed_count = 0
@@ -27,7 +29,6 @@ for doc_id in subset_doc_ids:
         with open(filepath, "r", encoding="utf-8") as f:
             doc_data = json.load(f)
 
-        # agar yeh document pehle se DB mein hai, skip karo (duplicate se bachne ke liye)
         existing = db.query(Document).filter(Document.paper_id == doc_data["id"]).first()
         if existing:
             print(f"Skipping {doc_id} — already in DB")
@@ -43,13 +44,15 @@ for doc_id in subset_doc_ids:
             abstract=doc_data.get("abstract"),
         )
         db.add(new_doc)
-        db.flush()  # taake new_doc.id mil jaye insert se pehle commit ke
+        db.flush()
 
         for section in doc_data.get("sections", []):
+            embedding_vector = embedding_model.encode(section["text"]).tolist()
             chunk = Chunk(
                 document_id=new_doc.id,
                 section_index=section["section_id"],
                 text=section["text"],
+                embedding=embedding_vector,
             )
             db.add(chunk)
 

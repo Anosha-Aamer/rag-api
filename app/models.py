@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.database import Base
+from pgvector.sqlalchemy import Vector
 
 
 class Document(Base):
@@ -25,5 +26,6 @@ class Chunk(Base):
     section_index = Column(Integer, nullable=False)
     text = Column(Text, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+    embedding = Column(Vector(384)) 
 
     document = relationship("Document", back_populates="chunks")
